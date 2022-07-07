@@ -1,19 +1,23 @@
-import * as fs from "fs";
-import * as path from "path";
-import { Account, Person } from "./types";
+import type { Account, Person } from "./types";
+import * as readline from "readline";
 
-const file = fs.readFileSync(path.join(__dirname, "accounts.json"), "utf-8");
-const data = JSON.parse(file) as Account[];
-
+/** Returns an array with duplicates removed */
 const uniq = <T>(items: T[]): T[] => {
   return Array.from(new Set(items));
 };
 
-const split = <T>(items: T[], f: (item: T) => boolean) => {
+/**
+ * Splits an array into a tuple of two arrays based on
+ * whether it passes or fails the given function
+ */
+const split = <T>(
+  items: T[],
+  predicate: (item: T) => boolean
+): readonly [T[], T[]] => {
   const passingItems: T[] = [];
   const failingItems: T[] = [];
   items.forEach((item) => {
-    if (f(item)) {
+    if (predicate(item)) {
       passingItems.push(item);
     } else {
       failingItems.push(item);
@@ -58,4 +62,18 @@ export const mergeAccounts = (data: Account[]): Person[] => {
   return personList;
 };
 
-console.log(mergeAccounts(data));
+const main = (): void => {
+  const rl = readline.createInterface({
+    input: process.stdin,
+  });
+  let text = "";
+  rl.on("line", (line) => {
+    text += line;
+  });
+  rl.on("close", () => {
+    const data = JSON.parse(text) as Account[];
+    console.log(mergeAccounts(data));
+  });
+};
+
+main();
