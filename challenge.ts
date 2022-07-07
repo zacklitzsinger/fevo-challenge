@@ -71,7 +71,13 @@ const main = (): void => {
     text += line;
   });
   rl.on("close", () => {
-    const data = JSON.parse(text) as Account[];
+    let data: Account[] = [];
+    try {
+      data = JSON.parse(text);
+    } catch (err) {
+      console.error("Failed to parse JSON");
+      console.error(err);
+    }
     console.log(mergeAccounts(data));
   });
 };
