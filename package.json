@@ -1,0 +1,22 @@
+{
+  "name": "fevo-challenge",
+  "version": "1.0.0",
+  "description": "Given a listing of accounts, from a variety of applications, merge the accounts to create a listing of people.",
+  "main": "index.js",
+  "scripts": {
+    "cli": "tsx ./challenge.ts",
+    "test": "jest",
+    "test:watch": "jest --watch"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/jest": "^28.1.4",
+    "@types/node": "^18.0.0",
+    "jest": "^28.1.2",
+    "ts-jest": "^28.0.5"
+  },
+  "dependencies": {
+    "tsx": "^3.6.0"
+  }
+}
